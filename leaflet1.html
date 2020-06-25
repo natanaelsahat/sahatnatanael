@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tampilan Peta Leaflet</title>
+	<!-- Leaflet CSS -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   	integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   	crossorigin=""/>
+	
+   	<!-- Leaflet javaScript -->
+   	<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   	integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   	crossorigin=""></script>
+</head>
+
+<body>
+
+	<h1><b>MENAMPILKAN PETA LEAFLET WMS BING</b></h1>
+    <h2>Tampilan Peta Dasar Satelit pada WMS Bing</h2>
+      <div>
+     <iframe width="800" height="500" frameborder="0" src="https://www.bing.com/maps/embed?h=500&w=800&cp=-6.905264778472073~107.62663028384172&lvl=11&typ=d&sty=h&src=SHELL&FORM=MBEDV8" scrolling="no">
+     </iframe>
+      </div>
+
+	<h2>Tampilan Peta Streetmap pada WMS Bing</h2>
+      <div>
+     <iframe width="800" height="500" frameborder="0" src="https://www.bing.com/maps/embed?h=500&w=800&cp=-6.905264778472073~107.62663028384172&lvl=11&typ=d&sty=r&src=SHELL&FORM=MBEDV8" scrolling="no">
+     </iframe>
+ 	</div>
+
+
+	<!-- Konfigurasi Ukuran Peta yang akan dibuat -->
+	<div id="mapid" style="width: 1200px; height: 600px;"></div>
+	<script src="js/leaflet.ajax.js"></script>
+	<script>
+		var mymap = L.map('mapid').setView([-6.889,107.620], 13);
+
+		// BASEMAP
+		L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+		maxZoom: 18,
+		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		id: 'mapbox/streets-v11',
+		tileSize: 512,
+		zoomOffset: -1
+	}).addTo(mymap);
+
+		// MENAMBAH CIRCLE PADA PETA
+		// var circle = L.circle([-6.889,107.620], {
+  //  		 color: 'green',
+  //  		 fillColor: '#f01',
+  //  		 fillOpacity: 0.1,
+  //  		 radius: 1000
+		// }).addTo(mymap);
+
+		// MENAMBAH POLYGON PADA PETA
+		// var polygon = L.polygon([
+  //   	[-6.893, 107.612],
+  //   	[-6.893, 107.608],
+  //   	[-6.887, 107.608],
+  //   	[-6.887, 107.612]
+		// ]).addTo(mymap);
+
+		// INFO KOORDINAT PETA
+		var popup = L.popup();
+
+			function onMapClick(e) {
+    		popup
+        .setLatLng(e.latlng)
+        .setContent("KOORDINAT" + e.latlng.toString())
+        .openOn(mymap);
+			}
+
+		mymap.on('click', onMapClick);
+
+		//MENAMBAH ATRIBUT SKALA
+		L.control.scale().addTo(mymap);
+
+
+
+
+	</script>
+</body>
+
+
+</html>
